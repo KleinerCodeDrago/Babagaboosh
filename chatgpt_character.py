@@ -48,15 +48,15 @@ while True:
     elevenlabs_output = elevenlabs_manager.text_to_audio(openai_result, ELEVENLABS_VOICE, False)
 
     if config["WEBSOCKET_ENABLED"]:
-        # Enable the picture of Pajama Sam in OBS
-        obswebsockets_manager.set_source_visibility("*** Mid Monitor", "Pajama Sam", True)
+        # TODO: add to config
+        obswebsockets_manager.set_source_visibility("desktop", "Scene", True)
 
     # Play the mp3 file
     audio_manager.play_audio(elevenlabs_output, True, True, True)
 
     if config["WEBSOCKET_ENABLED"]:
         # Disable Pajama Sam pic in OBS
-        obswebsockets_manager.set_source_visibility("*** Mid Monitor", "Pajama Sam", False)
+        obswebsockets_manager.set_source_visibility("desktop", "Scene", False)
 
     print("[green]\n!!!!!!!\nFINISHED PROCESSING DIALOGUE.\nREADY FOR NEXT INPUT\n!!!!!!!\n")
     

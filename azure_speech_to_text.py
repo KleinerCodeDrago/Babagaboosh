@@ -179,13 +179,14 @@ class SpeechToTextManager:
 # Tests
 if __name__ == '__main__':
 
-    TEST_FILE = "D:\Video Editing\Misc - Ai teaches me to pass History Exam\Audio\Misc - Ai teaches me to pass History Exam - VO 1.wav"
+    # TODO: Add to config
+    TEST_FILE = "\\DS720Plus\homes\Timo\git\Babagaboosh\TestAudio_WAV.wav"
     
     speechtotext_manager = SpeechToTextManager()
 
     while True:
         #speechtotext_manager.speechtotext_from_mic()
-        #speechtotext_manager.speechtotext_from_file(TEST_FILE)
+        # result = speechtotext_manager.speechtotext_from_file(TEST_FILE)
         #speechtotext_manager.speechtotext_from_file_continuous(TEST_FILE)
         result = speechtotext_manager.speechtotext_from_mic_continuous()
         print(f"\n\nHERE IS THE RESULT:\n{result}")
