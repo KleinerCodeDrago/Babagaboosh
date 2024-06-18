@@ -3,31 +3,26 @@ import tiktoken
 import os
 from rich import print
 
-def num_tokens_from_messages(messages, model='gpt-4'):
-  """Returns the number of tokens used by a list of messages.
-  Copied with minor changes from: https://platform.openai.com/docs/guides/chat/managing-tokens """
-  try:
-      encoding = tiktoken.encoding_for_model(model)
-      num_tokens = 0
-      for message in messages:
-          num_tokens += 4  # every message follows <im_start>{role/name}\n{content}<im_end>\n
-          for key, value in message.items():
-              num_tokens += len(encoding.encode(value))
-              if key == "name":  # if there's a name, the role is omitted
-                  num_tokens += -1  # role is always required and always 1 token
-      num_tokens += 2  # every reply is primed with <im_start>assistant
-      return num_tokens
-  except Exception:
-      raise NotImplementedError(f"""num_tokens_from_messages() is not presently implemented for model {model}.
-      #See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens.""")
-      
+def num_tokens_from_messages(messages, model='llama-3-sonar-large-32k-online'):
+    """Returns the number of tokens used by a list of messages."""
+    encoding = tiktoken.get_encoding("cl100k_base")  # Replace with the appropriate encoding for the model
+    num_tokens = 0
+    for message in messages:
+        num_tokens += 4  # every message follows <im_start>{role/name}\n{content}<im_end>\n
+        for key, value in message.items():
+            num_tokens += len(encoding.encode(value))
+            if key == "name":  # if there's a name, the role is omitted
+                num_tokens += -1  # role is always required and always 1 token
+    num_tokens += 2  # every reply is primed with <im_start>assistant
+    return num_tokens
+
 
 class OpenAiManager:
     
     def __init__(self):
         self.chat_history = [] # Stores the entire conversation
         try:
-            self.client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+            self.client = OpenAI(api_key=os.environ['OPENAI_API_KEY'], base_url="https://api.perplexity.ai")
         except TypeError:
             exit("Ooops! You forgot to set OPENAI_API_KEY in your environment!")
 
@@ -45,7 +40,7 @@ class OpenAiManager:
 
         print("[yellow]\nAsking ChatGPT a question...")
         completion = self.client.chat.completions.create(
-          model="gpt-4",
+          model="llama-3-70b-instruct",
           messages=chat_question
         )
 
@@ -71,7 +66,7 @@ class OpenAiManager:
 
         print("[yellow]\nAsking ChatGPT a question...")
         completion = self.client.chat.completions.create(
-          model="gpt-4",
+          model="llama-3-70b-instruct",
           messages=self.chat_history
         )
 
