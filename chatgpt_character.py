@@ -58,4 +58,3 @@ while True:
             obswebsockets_manager.set_source_visibility(config["SCENE_NAME"], config["SOURCE_NAME"], False)
 
     print("[green]\n!!!!!!!\nFINISHED PROCESSING DIALOGUE.\nREADY FOR NEXT INPUT\n!!!!!!!\n")
-    

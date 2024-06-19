@@ -9,6 +9,7 @@ with open('config.json') as config_file:
 
 try:
   set_api_key(config['ELEVENLABS_API_KEY'])
+
 except TypeError:
   exit("Ooops! You forgot to set ELEVENLABS_API_KEY in your environment!")
 
@@ -25,6 +26,7 @@ class ElevenLabsManager:
           text=input_text,
           voice=voice,
           model=config["ELEVENLABS_MODEL"]
+
         )
         if save_as_wave:
           file_name = f"___Msg{str(hash(input_text))}.wav"
@@ -40,6 +42,7 @@ class ElevenLabsManager:
           text=input_text,
           voice=voice,
           model=config["ELEVENLABS_MODEL"]
+
         )
         play(audio)
 
@@ -49,6 +52,7 @@ class ElevenLabsManager:
           text=input_text,
           voice=voice,
           model=config["ELEVENLABS_MODEL"],
+
           stream=True
         )
         stream(audio_stream)
@@ -56,12 +60,12 @@ class ElevenLabsManager:
 
 if __name__ == '__main__':
     elevenlabs_manager = ElevenLabsManager()
-
     elevenlabs_manager.text_to_audio_streamed("This is my streamed test audio, I'm so much cooler than played")
     time.sleep(2)
     elevenlabs_manager.text_to_audio_played("This is my played test audio, hello hello")
     time.sleep(2)
     file_path = elevenlabs_manager.text_to_audio("This is my saved test audio, please make me beautiful")
+
     print("Finished with all tests")
 
     time.sleep(30)
