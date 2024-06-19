@@ -4,9 +4,7 @@ import tiktoken
 import os
 from rich import print
 import logging
-from logging_config import log_string, setup_logging
-
-setup_logging()
+from logging_config import log_string
 
 # Load configurations
 with open('config.json') as config_file:

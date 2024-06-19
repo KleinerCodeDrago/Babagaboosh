@@ -20,10 +20,18 @@ LOG_STRINGS = {
         "playing_audio_async": "Playing audio file asynchronously: {}",
         "test_audio_missing": "Missing test audio",
         "sleeping_until_next_file": "Sleeping until next file",
-        "playing_async_audio": "Playing async audio"
-        
-
-    },
+        "playing_async_audio": "Playing async audio",
+        "azure_speech_key_missing": "AZURE_SPEECH_KEY environment variable is missing",
+        "azure_speech_region_missing": "AZURE_SPEECH_REGION environment variable is missing",
+        "azure_speech_initialized": "Azure Speech client initialized",
+        "azure_speech_recognition_canceled": "Azure Speech recognition canceled. Error details: {}",
+        "azure_speech_recognition_result": "Azure Speech recognition result: {}",
+        "azure_speech_synthesis_error": "Azure Speech synthesis failed. Error details: {}",
+        "azure_speech_synthesis_completed": "Azure Speech synthesis completed. Audio saved to: {}",
+        "loop_start": "Starting main loop",
+        "f4_pressed": "F4 key pressed, starting speech recognition",
+        "dialogue_finished": "Dialogue finished"
+ },
     "de": {
         "openai_client_initialized": "OpenAI-Client initialisiert",
         "openai_api_key_missing": "OPENAI_API_KEY Umgebungsvariable fehlt",
@@ -42,8 +50,17 @@ LOG_STRINGS = {
         "playing_audio_async": "Spiele Audio-Datei asynchron ab: {}",
         "test_audio_missing": "Test-Audio fehlt",
         "sleeping_until_next_file": "Warte bis zur nächsten Datei",
-        "playing_async_audio": "Spiele asynchrone Audio-Dateien ab"
-
+        "playing_async_audio": "Spiele asynchrone Audio-Dateien ab",
+        "azure_speech_key_missing": "AZURE_SPEECH_KEY Umgebungsvariable fehlt",
+        "azure_speech_region_missing": "AZURE_SPEECH_REGION Umgebungsvariable fehlt",
+        "azure_speech_initialized": "Azure Speech-Client initialisiert",
+        "azure_speech_recognition_canceled": "Azure Speech-Erkennung abgebrochen. Fehlerdetails: {}",
+        "azure_speech_recognition_result": "Azure Speech-Erkennungsergebnis: {}",
+        "azure_speech_synthesis_error": "Azure Speech-Synthese fehlgeschlagen. Fehlerdetails: {}",
+        "azure_speech_synthesis_completed": "Azure Speech-Synthese abgeschlossen. Audio gespeichert unter: {}",
+        "loop_start": "Hauptschleife gestartet",
+        "f4_pressed": "F4-Taste gedrückt, Sprachaufnahme gestartet",
+        "dialogue_finished": "Dialog beendet"
     },
     "de_simple": {
         "openai_client_initialized": "AI-Programm ist bereit",
@@ -63,10 +80,20 @@ LOG_STRINGS = {
         "playing_audio_async": "Spiele diese Datei ab, während andere Dinge laufen: {}",
         "test_audio_missing": "Test-Dateien fehlen",
         "sleeping_until_next_file": "Warte bis zur nächsten Datei",
-        "playing_async_audio": "Spiele mehrere Dateien gleichzeitig ab"
-
+        "playing_async_audio": "Spiele mehrere Dateien gleichzeitig ab",
+        "azure_speech_key_missing": "Azure Sprach-Schlüssel fehlt",
+        "azure_speech_region_missing": "Azure Sprach-Region fehlt",
+        "azure_speech_initialized": "Azure Sprach-Programm ist bereit",
+        "azure_speech_recognition_canceled": "Azure Sprach-Erkennung abgebrochen. Fehler: {}",
+        "azure_speech_recognition_result": "Azure Sprach-Erkennung Ergebnis: {}",
+        "azure_speech_synthesis_error": "Azure Sprach-Ausgabe Fehler: {}",
+        "azure_speech_synthesis_completed": "Azure Sprach-Ausgabe fertig. Datei gespeichert: {}",
+        "loop_start": "Hauptschleife gestartet",
+        "f4_pressed": "F4-Taste gedrückt, Sprachaufnahme gestartet",
+        "dialogue_finished": "Dialog beendet"
     }
 }
+
 
 def log_string(key, value=None):
     log_str = LOG_STRINGS[config["LOG_LANGUAGE"]][key]
@@ -74,6 +101,3 @@ def log_string(key, value=None):
         return log_str.format(value)
     else:
         return log_str
-
-def setup_logging():
-    logging.basicConfig(level=logging.INFO, format='%(message)s')

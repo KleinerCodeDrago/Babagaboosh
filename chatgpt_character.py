@@ -8,7 +8,7 @@ from obs_websockets import OBSWebsocketsManager
 from audio_player import AudioManager
 import json
 import logging
-from logging_config import setup_logging, log_string
+from logging_config import log_string
 
 # Load configurations
 with open('config.json') as config_file:
