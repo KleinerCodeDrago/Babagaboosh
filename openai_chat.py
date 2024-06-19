@@ -3,6 +3,10 @@ from openai import OpenAI
 import tiktoken
 import os
 from rich import print
+import logging
+from logging_config import log_string, setup_logging
+
+setup_logging()
 
 # Load configurations
 with open('config.json') as config_file:
@@ -28,22 +32,24 @@ class OpenAiManager:
         self.chat_history = [] # Stores the entire conversation
         try:
             self.client = OpenAI(api_key=os.environ['OPENAI_API_KEY'], base_url=config["OPENAI_BASE_URL"])
+            logging.info(log_string("openai_client_initialized"))
         except TypeError:
+            logging.error(log_string("openai_api_key_missing"))
             exit("Ooops! You forgot to set OPENAI_API_KEY in your environment!")
 
     # Asks a question with no chat history
     def chat(self, prompt=""):
         if not prompt:
-            print("Didn't receive input!")
+            logging.warning(log_string("no_input_received"))
             return
 
         # Check that the prompt is under the token context limit
         chat_question = [{"role": "user", "content": prompt}]
         if num_tokens_from_messages(chat_question) > 8000:
-            print("The length of this chat question is too large for the GPT model")
+            logging.warning(log_string("prompt_too_long"))
             return
 
-        print("[yellow]\nAsking ChatGPT a question...")
+        logging.info(log_string("asking_chatgpt"))
         completion = self.client.chat.completions.create(
           model=config["AI_MODEL"],
           messages=chat_question
@@ -51,25 +57,25 @@ class OpenAiManager:
 
         # Process the answer
         openai_answer = completion.choices[0].message.content
-        print(f"[green]\n{openai_answer}\n")
+        logging.info(log_string("chatgpt_response", openai_answer))
         return openai_answer
 
     # Asks a question that includes the full conversation history
     def chat_with_history(self, prompt=""):
         if not prompt:
-            print("Didn't receive input!")
+            logging.warning(log_string("no_input_received"))
             return
 
         # Add our prompt into the chat history
         self.chat_history.append({"role": "user", "content": prompt})
 
         # Check total token limit. Remove old messages as needed
-        print(f"[coral]Chat History has a current token length of {num_tokens_from_messages(self.chat_history)}")
+        logging.info(log_string("chat_history_length", num_tokens_from_messages(self.chat_history)))
         while num_tokens_from_messages(self.chat_history) > 8000:
             self.chat_history.pop(1) # We skip the 1st message since it's the system message
-            print(f"Popped a message! New token length is: {num_tokens_from_messages(self.chat_history)}")
+            logging.warning(log_string("popped_message", num_tokens_from_messages(self.chat_history)))
 
-        print("[yellow]\nAsking ChatGPT a question...")
+        logging.info(log_string("asking_chatgpt"))
         completion = self.client.chat.completions.create(
           model=config["AI_MODEL"],
           messages=self.chat_history
@@ -80,7 +86,7 @@ class OpenAiManager:
 
         # Process the answer
         openai_answer = completion.choices[0].message.content
-        print(f"[green]\n{openai_answer}\n")
+        logging.info(log_string("chatgpt_response", openai_answer))
         return openai_answer
    
 
@@ -99,4 +105,3 @@ if __name__ == '__main__':
     while True:
         new_prompt = input("\nNext question? \n\n")
         openai_manager.chat_with_history(new_prompt)
-        
