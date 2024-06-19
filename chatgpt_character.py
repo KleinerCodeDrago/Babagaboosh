@@ -30,14 +30,14 @@ audio_manager = AudioManager()
 
 openai_manager.chat_history.append(FIRST_SYSTEM_MESSAGE)
 
-logger.info(log_string("loop_start"))
+print(log_string("loop_start"))
 while True:
     # Wait until user presses "f4" key
     if keyboard.read_key() != "f4":
         time.sleep(0.1)
         continue
 
-    logger.info(log_string("f4_pressed"))
+    print(log_string("f4_pressed"))
 
     # Get question from mic
     mic_result = speechtotext_manager.speechtotext_from_mic_continuous()
@@ -62,4 +62,4 @@ while True:
         # Disable Pajama Sam pic in OBS
         obswebsockets_manager.set_source_visibility(config["SCENE_NAME"], config["SOURCE_NAME"], False)
 
-    logger.info(log_string("dialogue_finished"))
+    print(log_string("dialogue_finished"))
