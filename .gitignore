@@ -3,4 +3,4 @@
 __pycache__
 ChatHistoryBackup.txt
 .env
-ChatHistoryBackup.txt
+config.json

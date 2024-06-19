@@ -179,8 +179,7 @@ class SpeechToTextManager:
 # Tests
 if __name__ == '__main__':
 
-    # TODO: Add to config
-    TEST_FILE = "\\DS720Plus\homes\Timo\git\Babagaboosh\TestAudio_WAV.wav"
+    TEST_FILE = config['TEST_FILE_AZURESPEECH']
     
     speechtotext_manager = SpeechToTextManager()
 
