@@ -30,7 +30,24 @@ LOG_STRINGS = {
         "azure_speech_synthesis_completed": "Azure Speech synthesis completed. Audio saved to: {}",
         "loop_start": "Starting main loop",
         "f4_pressed": "F4 key pressed, starting speech recognition",
-        "dialogue_finished": "Dialogue finished"
+        "dialogue_finished": "Dialogue finished",
+        "speak_into_microphone": "Speak into your microphone.",
+        "no_speech_recognized": "No speech could be recognized: {}",
+        "check_speech_key_and_region": "Did you set the speech resource key and region values?",
+        "got_text_result": "We got the following text: {}",
+        "listening_to_file": "Listening to the file",
+        "closing_on_event": "CLOSING on {}",
+        "recognized_event": "RECOGNIZED: {}",
+        "session_started_event": "SESSION STARTED: {}",
+        "session_stopped_event": "SESSION STOPPED {}",
+        "canceled_event": "CANCELED {}",
+        "processing_audio_file": "Now processing the audio file...",
+        "continuous_file_read_result": "Here's the result we got from continuous file read!\n\n{}\n\n",
+        "closing_speech_recognition_on_event": "CLOSING speech recognition on {}",
+        "continuous_speech_recognition_running": "Continuous Speech Recognition is now running, say something.",
+        "ending_azure_speech_recognition": "\nEnding azure speech recognition\n",
+        "continuous_speech_recognition_result": "Here's the result we got!\n\n{}\n\n",
+        "final_result": "\n\nHERE IS THE RESULT:\n{}"
  },
     "de": {
         "openai_client_initialized": "OpenAI-Client initialisiert",
@@ -60,7 +77,25 @@ LOG_STRINGS = {
         "azure_speech_synthesis_completed": "Azure Speech-Synthese abgeschlossen. Audio gespeichert unter: {}",
         "loop_start": "Hauptschleife gestartet",
         "f4_pressed": "F4-Taste gedrückt, Sprachaufnahme gestartet",
-        "dialogue_finished": "Dialog beendet"
+        "dialogue_finished": "Dialog beendet",
+        "speak_into_microphone": "Sprechen Sie in Ihr Mikrofon.",
+        "no_speech_recognized": "Es konnte keine Sprache erkannt werden: {}",
+        "check_speech_key_and_region": "Haben Sie den Sprachressourcenschlüssel und die Regionswerte festgelegt?",
+        "got_text_result": "Wir haben folgenden Text erhalten: {}",
+        "listening_to_file": "Höre die Datei ab",
+        "closing_on_event": "SCHLIESSE auf {}",
+        "recognized_event": "ERKANNT: {}",
+        "session_started_event": "SITZUNG GESTARTET: {}",
+        "session_stopped_event": "SITZUNG GESTOPPT {}",
+        "canceled_event": "ABGEBROCHEN {}",
+        "processing_audio_file": "Verarbeite jetzt die Audiodatei...",
+        "continuous_file_read_result": "Hier ist das Ergebnis, das wir vom kontinuierlichen Lesen der Datei erhalten haben!\n\n{}\n\n",
+        "closing_speech_recognition_on_event": "SCHLIESSE Spracherkennung auf {}",
+        "continuous_speech_recognition_running": "Kontinuierliche Spracherkennung läuft jetzt, sagen Sie etwas.",
+        "ending_azure_speech_recognition": "\nBeende Azure-Spracherkennung\n",
+        "continuous_speech_recognition_result": "Hier ist das Ergebnis, das wir erhalten haben!\n\n{}\n\n",
+        "final_result": "\n\nHIER IST DAS ERGEBNIS:\n{}"
+
     },
     "de_simple": {
         "openai_client_initialized": "AI-Programm ist bereit",
@@ -71,7 +106,7 @@ LOG_STRINGS = {
         "chatgpt_response": "Antwort von der AI: {}",
         "chat_history_length": "Der Chat-Verlauf hat eine Länge von {}",
         "popped_message": "Eine Nachricht entfernt! Neue Länge ist: {}",
-        "audio_manager_initialized": "Audio-Programm ist bereit",
+        "audio_manager_initialized": "Ohren der AI sind wieder bereit aktiviert zu werden",
         "playing_audio_file": "Spiele diese Datei ab: {}",
         "audio_mixer_reinitialized": "Audio-Programm ist wieder bereit",
         "unknown_file_type": "Kann diese Datei nicht abspielen",
@@ -90,7 +125,25 @@ LOG_STRINGS = {
         "azure_speech_synthesis_completed": "Azure Sprach-Ausgabe fertig. Datei gespeichert: {}",
         "loop_start": "Hauptschleife gestartet",
         "f4_pressed": "F4-Taste gedrückt, Sprachaufnahme gestartet",
-        "dialogue_finished": "Dialog beendet"
+        "dialogue_finished": "Dialog beendet",
+        "speak_into_microphone": "Sprich ins Mikrofon.",
+        "no_speech_recognized": "Konnte keine Sprache erkennen: {}",
+        "check_speech_key_and_region": "Hast du den Sprach-Schlüssel und die Region eingestellt?",
+        "got_text_result": "Das habe ich verstanden: {}",
+        "listening_to_file": "Ich höre mir die Datei an",
+        "closing_on_event": "BEENDE wegen {}",
+        "recognized_event": "ERKANNT: {}",
+        "session_started_event": "AUFNAHME GESTARTET: {}",
+        "session_stopped_event": "AUFNAHME GESTOPPT {}",
+        "canceled_event": "ABGEBROCHEN {}",
+        "processing_audio_file": "Verarbeite jetzt die Audio-Datei...",
+        "continuous_file_read_result": "Das ist das Ergebnis vom Lesen der ganzen Datei!\n\n{}\n\n",
+        "closing_speech_recognition_on_event": "BEENDE Spracherkennung wegen {}",
+        "continuous_speech_recognition_running": "Dauernde Spracherkennung läuft jetzt, sag was.",
+        "ending_azure_speech_recognition": "\nBeende Azure Spracherkennung\n",
+        "continuous_speech_recognition_result": "Das ist das Ergebnis!\n\n{}\n\n",
+        "final_result": "\n\nHIER IST DAS ERGEBNIS:\n{}"
+
     }
 }
 
