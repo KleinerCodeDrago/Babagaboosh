@@ -1,7 +1,11 @@
+import json
 import time
 import azure.cognitiveservices.speech as speechsdk
 import keyboard
 import os
+
+with open('config.json') as config_file:
+    config = json.load(config_file)
 
 class SpeechToTextManager:
     azure_speechconfig = None
@@ -10,13 +14,15 @@ class SpeechToTextManager:
 
     def __init__(self):
         # Creates an instance of a speech config with specified subscription key and service region.
-        # Replace with your own subscription key and service region (e.g., "westus").
         try:
-            self.azure_speechconfig = speechsdk.SpeechConfig(subscription=os.getenv('AZURE_TTS_KEY'), region=os.getenv('AZURE_TTS_REGION'))
+            self.azure_speechconfig = speechsdk.SpeechConfig(
+                subscription=config['AZURE_TTS_KEY'], 
+                region=config['AZURE_TTS_REGION']
+            )
+            self.azure_speechconfig.speech_recognition_language = config["AZURE_SPEECH_RECOGNITION_LANGUAGE"]
         except TypeError:
             exit("Ooops! You forgot to set AZURE_TTS_KEY or AZURE_TTS_REGION in your environment!")
         
-        self.azure_speechconfig.speech_recognition_language="en-US"
         
     def speechtotext_from_mic(self):
         
@@ -173,13 +179,13 @@ class SpeechToTextManager:
 # Tests
 if __name__ == '__main__':
 
-    TEST_FILE = "D:\Video Editing\Misc - Ai teaches me to pass History Exam\Audio\Misc - Ai teaches me to pass History Exam - VO 1.wav"
+    TEST_FILE = config['TEST_FILE_AZURESPEECH']
     
     speechtotext_manager = SpeechToTextManager()
 
     while True:
         #speechtotext_manager.speechtotext_from_mic()
-        #speechtotext_manager.speechtotext_from_file(TEST_FILE)
+        # result = speechtotext_manager.speechtotext_from_file(TEST_FILE)
         #speechtotext_manager.speechtotext_from_file_continuous(TEST_FILE)
         result = speechtotext_manager.speechtotext_from_mic_continuous()
         print(f"\n\nHERE IS THE RESULT:\n{result}")
