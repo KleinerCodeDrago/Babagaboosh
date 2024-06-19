@@ -2,6 +2,7 @@ import time
 import sys
 from obswebsocket import obsws, requests  # noqa: E402
 from websockets_auth import WEBSOCKET_HOST, WEBSOCKET_PORT, WEBSOCKET_PASSWORD
+from logging_config import log_string
 
 ##########################################################
 ##########################################################
@@ -15,10 +16,10 @@ class OBSWebsocketsManager:
         try:
             self.ws.connect()
         except:
-            print("\nPANIC!!\nCOULD NOT CONNECT TO OBS!\nDouble check that you have OBS open and that your websockets server is enabled in OBS.")
+            print(log_string("could_not_connect_obs"))
             time.sleep(10)
             sys.exit()
-        print("Connected to OBS Websockets!\n")
+        print(log_string("conected_to_obs"))
 
     def disconnect(self):
         self.ws.disconnect()

@@ -47,7 +47,9 @@ LOG_STRINGS = {
         "continuous_speech_recognition_running": "Continuous Speech Recognition is now running, say something.",
         "ending_azure_speech_recognition": "\nEnding azure speech recognition\n",
         "continuous_speech_recognition_result": "Here's the result we got!\n\n{}\n\n",
-        "final_result": "\n\nHERE IS THE RESULT:\n{}"
+        "final_result": "\n\nHERE IS THE RESULT:\n{}",
+        "could_not_connect_obs": "\nPANIC!!\nCOULD NOT CONNECT TO OBS!\nDouble check that you have OBS open and that your websockets server is enabled in OBS.",
+        "conected_to_obs": "Connected to OBS Websockets!\n"
  },
     "de": {
         "openai_client_initialized": "OpenAI-Client initialisiert",
@@ -94,7 +96,10 @@ LOG_STRINGS = {
         "continuous_speech_recognition_running": "Kontinuierliche Spracherkennung läuft jetzt, sagen Sie etwas.",
         "ending_azure_speech_recognition": "\nBeende Azure-Spracherkennung\n",
         "continuous_speech_recognition_result": "Hier ist das Ergebnis, das wir erhalten haben!\n\n{}\n\n",
-        "final_result": "\n\nHIER IST DAS ERGEBNIS:\n{}"
+        "final_result": "\n\nHIER IST DAS ERGEBNIS:\n{}",
+        # TODO: Translate
+        "could_not_connect_obs": "\nPANIC!!\nCOULD NOT CONNECT TO OBS!\nDouble check that you have OBS open and that your websockets server is enabled in OBS.",
+        "conected_to_obs": "Connected to OBS Websockets!\n"
 
     },
     "de_simple": {
@@ -142,7 +147,10 @@ LOG_STRINGS = {
         "continuous_speech_recognition_running": "Dauernde Spracherkennung läuft jetzt, sag was.",
         "ending_azure_speech_recognition": "\nBeende Azure Spracherkennung\n",
         "continuous_speech_recognition_result": "Das ist das Ergebnis!\n\n{}\n\n",
-        "final_result": "\n\nHIER IST DAS ERGEBNIS:\n{}"
+        "final_result": "\n\nHIER IST DAS ERGEBNIS:\n{}",
+        # TODO: Translate
+        "could_not_connect_obs": "\nPANIC!!\nCOULD NOT CONNECT TO OBS!\nDouble check that you have OBS open and that your websockets server is enabled in OBS.",
+        "conected_to_obs": "Connected to OBS Websockets!\n"
 
     }
 }
