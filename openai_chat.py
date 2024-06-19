@@ -1,9 +1,14 @@
+import json
 from openai import OpenAI
 import tiktoken
 import os
 from rich import print
 
-def num_tokens_from_messages(messages, model='llama-3-sonar-large-32k-online'):
+# Load configurations
+with open('config.json') as config_file:
+    config = json.load(config_file)
+
+def num_tokens_from_messages(messages):
     """Returns the number of tokens used by a list of messages."""
     encoding = tiktoken.get_encoding("cl100k_base")  # Replace with the appropriate encoding for the model
     num_tokens = 0
@@ -22,7 +27,7 @@ class OpenAiManager:
     def __init__(self):
         self.chat_history = [] # Stores the entire conversation
         try:
-            self.client = OpenAI(api_key=os.environ['OPENAI_API_KEY'], base_url="https://api.perplexity.ai")
+            self.client = OpenAI(api_key=os.environ['OPENAI_API_KEY'], base_url=config["OPENAI_BASE_URL"])
         except TypeError:
             exit("Ooops! You forgot to set OPENAI_API_KEY in your environment!")
 
@@ -40,7 +45,7 @@ class OpenAiManager:
 
         print("[yellow]\nAsking ChatGPT a question...")
         completion = self.client.chat.completions.create(
-          model="llama-3-70b-instruct",
+          model=config["AI_MODEL"],
           messages=chat_question
         )
 
@@ -66,7 +71,7 @@ class OpenAiManager:
 
         print("[yellow]\nAsking ChatGPT a question...")
         completion = self.client.chat.completions.create(
-          model="llama-3-70b-instruct",
+          model=config["AI_MODEL"],
           messages=self.chat_history
         )
 
