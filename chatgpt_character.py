@@ -16,6 +16,7 @@ with open('config.json') as config_file:
 
 ELEVENLABS_VOICE = config["ELEVENLABS_VOICE"]
 FIRST_SYSTEM_MESSAGE = config["FIRST_SYSTEM_MESSAGE"]
+CONTINUOUS_LISTENING = config["CONTINUOUS_LISTENING"]
 
 BACKUP_FILE = "ChatHistoryBackup.txt"
 
@@ -32,15 +33,18 @@ openai_manager.chat_history.append(FIRST_SYSTEM_MESSAGE)
 
 print(log_string("loop_start"))
 while True:
-    # Wait until user presses "f4" key
-    if keyboard.read_key() != "f4":
-        time.sleep(0.1)
-        continue
-
-    print(log_string("f4_pressed"))
+    if not CONTINUOUS_LISTENING:
+        # Wait until user presses "f4" key
+        if keyboard.read_key() != "f4":
+            time.sleep(0.1)
+            continue
+        print(log_string("f4_pressed"))
 
     # Get question from mic
-    mic_result = speechtotext_manager.speechtotext_from_mic_continuous()
+    mic_result = speechtotext_manager.speechtotext_from_mic_continuous(stop_on_silence=CONTINUOUS_LISTENING)
+    
+    if not mic_result:
+        continue
     
     # Send question to OpenAi
     openai_result = openai_manager.chat_with_history(mic_result)

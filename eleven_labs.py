@@ -18,7 +18,7 @@ class ElevenLabsManager:
     def __init__(self):
         # CALLING voices() IS NECESSARY TO INSTANTIATE 11LABS FOR SOME FUCKING REASON
         all_voices = voices()
-        print(f"\nAll ElevenLabs voices: \n{all_voices}\n")
+        # print(f"\nAll ElevenLabs voices: \n{all_voices}\n")
 
     # Convert text to speech, then save it to file. Returns the file path
     def text_to_audio(self, input_text, voice=config["ELEVENLABS_VOICE"], save_as_wave=True, subdirectory=""):

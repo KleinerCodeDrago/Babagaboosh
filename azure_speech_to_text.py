@@ -100,12 +100,15 @@ class SpeechToTextManager:
         print(log_string("continuous_file_read_result", final_result))
         return final_result
 
-    def speechtotext_from_mic_continuous(self, stop_key='p'):
+    def speechtotext_from_mic_continuous(self, stop_on_silence=False, stop_key='p'):
         self.azure_speechrecognizer = speechsdk.SpeechRecognizer(speech_config=self.azure_speechconfig)
         done = False
 
         def recognized_cb(evt: speechsdk.SpeechRecognitionEventArgs):
             print(log_string("recognized_event", evt))
+            if evt.result.text.strip() == "":
+                nonlocal done
+                done = True
 
         self.azure_speechrecognizer.recognized.connect(recognized_cb)
 
@@ -129,15 +132,16 @@ class SpeechToTextManager:
         print(log_string("continuous_speech_recognition_running"))
 
         while not done:
-            if keyboard.read_key() == stop_key:
+            if not stop_on_silence and keyboard.read_key() == stop_key:
                 print(log_string("ending_azure_speech_recognition"))
                 self.azure_speechrecognizer.stop_continuous_recognition_async()
                 break
+            else:
+                time.sleep(0.1)
 
         final_result = " ".join(all_results).strip()
         print(log_string("continuous_speech_recognition_result", final_result))
         return final_result
-
 
 # Tests
 if __name__ == '__main__':
