@@ -17,7 +17,7 @@ def num_tokens_from_messages(messages):
     for message in messages:
         num_tokens += 4  # every message follows <im_start>{role/name}\n{content}<im_end>\n
         for key, value in message.items():
-            num_tokens += len(encoding.encode(value))
+            num_tokens += len(encoding.encode(str(value)))
             if key == "name":  # if there's a name, the role is omitted
                 num_tokens += -1  # role is always required and always 1 token
     num_tokens += 2  # every reply is primed with <im_start>assistant
@@ -70,13 +70,17 @@ class OpenAiManager:
         # Check total token limit. Remove old messages as needed
         print(log_string("chat_history_length", num_tokens_from_messages(self.chat_history)))
         while num_tokens_from_messages(self.chat_history) > 8000:
-            self.chat_history.pop(1) # We skip the 1st message since it's the system message
+            if len(self.chat_history) > 2:
+                self.chat_history.pop(1)  # Remove the oldest user message
+                self.chat_history.pop(1)  # Remove the corresponding assistant message
+            else:
+                break
             print(log_string("popped_message", num_tokens_from_messages(self.chat_history)))
 
         print(log_string("asking_chatgpt"))
         completion = self.client.chat.completions.create(
-          model=config["AI_MODEL"],
-          messages=self.chat_history
+            model=config["AI_MODEL"],
+            messages=self.chat_history
         )
 
         # Add this answer to our chat history
