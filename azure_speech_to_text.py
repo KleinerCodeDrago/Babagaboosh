@@ -4,6 +4,7 @@ import azure.cognitiveservices.speech as speechsdk
 import keyboard
 import os
 import logging
+import threading
 from logging_config import log_string
 
 with open('config.json') as config_file:
@@ -65,83 +66,52 @@ class SpeechToTextManager:
                 print(log_string("check_speech_key_and_region"))
         return speech_recognition_result.text
 
-    def speechtotext_from_file_continuous(self, filename):
-        self.azure_audioconfig = speechsdk.audio.AudioConfig(filename=filename)
-        self.azure_speechrecognizer = speechsdk.SpeechRecognizer(speech_config=self.azure_speechconfig, audio_config=self.azure_audioconfig)
-        done = False
-
-        def stop_cb(evt):
-            print(log_string("closing_on_event", evt))
-            nonlocal done
-            done = True
-
-        self.azure_speechrecognizer.recognized.connect(lambda evt: print(log_string("recognized_event", evt)))
-        self.azure_speechrecognizer.session_started.connect(lambda evt: print(log_string("session_started_event", evt)))
-        self.azure_speechrecognizer.session_stopped.connect(lambda evt: print(log_string("session_stopped_event", evt)))
-        self.azure_speechrecognizer.canceled.connect(lambda evt: print(log_string("canceled_event", evt)))
-
-        self.azure_speechrecognizer.session_stopped.connect(stop_cb)
-        self.azure_speechrecognizer.canceled.connect(stop_cb)
-
-        all_results = []
-
-        def handle_final_result(evt):
-            all_results.append(evt.result.text)
-
-        self.azure_speechrecognizer.recognized.connect(handle_final_result)
-
-        print(log_string("processing_audio_file"))
-        self.azure_speechrecognizer.start_continuous_recognition()
-
-        while not done:
-            time.sleep(.5)
-
-        self.azure_speechrecognizer.stop_continuous_recognition()
-        final_result = " ".join(all_results).strip()
-        print(log_string("continuous_file_read_result", final_result))
-        return final_result
-
     def speechtotext_from_mic_continuous(self, stop_on_silence=False, stop_key='p'):
-        self.azure_speechrecognizer = speechsdk.SpeechRecognizer(speech_config=self.azure_speechconfig)
-        done = False
+        final_result = None
 
-        def recognized_cb(evt: speechsdk.SpeechRecognitionEventArgs):
-            print(log_string("recognized_event", evt))
-            if evt.result.text.strip() == "" and not self.is_speaking:
+        def recognition_thread():
+            nonlocal final_result
+            self.azure_speechrecognizer = speechsdk.SpeechRecognizer(speech_config=self.azure_speechconfig)
+            done = False
+            all_results = []
+
+            def recognized_cb(evt: speechsdk.SpeechRecognitionEventArgs):
+                print(log_string("recognized_event", evt))
+                if evt.result.text.strip():
+                    all_results.append(evt.result.text)
+                if evt.result.text.strip() == "" and not self.is_speaking:
+                    nonlocal done
+                    done = True
+
+            self.azure_speechrecognizer.recognized.connect(recognized_cb)
+
+            def stop_cb(evt: speechsdk.SessionEventArgs):
+                print(log_string("closing_speech_recognition_on_event", evt))
                 nonlocal done
                 done = True
 
-        self.azure_speechrecognizer.recognized.connect(recognized_cb)
+            self.azure_speechrecognizer.session_stopped.connect(stop_cb)
+            self.azure_speechrecognizer.canceled.connect(stop_cb)
 
-        def stop_cb(evt: speechsdk.SessionEventArgs):
-            print(log_string("closing_speech_recognition_on_event", evt))
-            nonlocal done
-            done = True
+            result_future = self.azure_speechrecognizer.start_continuous_recognition_async()
+            result_future.get()
+            print(log_string("continuous_speech_recognition_running"))
 
-        self.azure_speechrecognizer.session_stopped.connect(stop_cb)
-        self.azure_speechrecognizer.canceled.connect(stop_cb)
+            while not done:
+                if not stop_on_silence and keyboard.read_key() == stop_key:
+                    print(log_string("ending_azure_speech_recognition"))
+                    self.azure_speechrecognizer.stop_continuous_recognition_async()
+                    break
+                else:
+                    time.sleep(0.1)
 
-        all_results = []
+            if all_results:
+                final_result = " ".join(all_results).strip()
+            print(log_string("continuous_speech_recognition_result", final_result))
 
-        def handle_final_result(evt):
-            all_results.append(evt.result.text)
-
-        self.azure_speechrecognizer.recognized.connect(handle_final_result)
-
-        result_future = self.azure_speechrecognizer.start_continuous_recognition_async()
-        result_future.get()
-        print(log_string("continuous_speech_recognition_running"))
-
-        while not done:
-            if not stop_on_silence and keyboard.read_key() == stop_key:
-                print(log_string("ending_azure_speech_recognition"))
-                self.azure_speechrecognizer.stop_continuous_recognition_async()
-                break
-            else:
-                time.sleep(0.1)
-
-        final_result = " ".join(all_results).strip()
-        print(log_string("continuous_speech_recognition_result", final_result))
+        thread = threading.Thread(target=recognition_thread)
+        thread.start()
+        thread.join()
         return final_result
 
 # Tests
