@@ -7,6 +7,9 @@ from eleven_labs import ElevenLabsManager
 from obs_websockets import OBSWebsocketsManager
 from audio_player import AudioManager
 import json
+import logging
+from logging_config import log_string
+
 # Load configurations
 with open('config.json') as config_file:
     config = json.load(config_file)
@@ -15,6 +18,8 @@ ELEVENLABS_VOICE = config["ELEVENLABS_VOICE"]
 FIRST_SYSTEM_MESSAGE = config["FIRST_SYSTEM_MESSAGE"]
 
 BACKUP_FILE = "ChatHistoryBackup.txt"
+
+logger = logging.getLogger(__name__)
 
 elevenlabs_manager = ElevenLabsManager()
 if config["WEBSOCKET_ENABLED"]:
@@ -25,14 +30,14 @@ audio_manager = AudioManager()
 
 openai_manager.chat_history.append(FIRST_SYSTEM_MESSAGE)
 
-print("[green]Starting the loop, press F4 to begin")
+print(log_string("loop_start"))
 while True:
     # Wait until user presses "f4" key
     if keyboard.read_key() != "f4":
         time.sleep(0.1)
         continue
 
-    print("[green]User pressed F4 key! Now listening to your microphone:")
+    print(log_string("f4_pressed"))
 
     # Get question from mic
     mic_result = speechtotext_manager.speechtotext_from_mic_continuous()
@@ -55,6 +60,6 @@ while True:
 
     if config["WEBSOCKET_ENABLED"]:
         # Disable Pajama Sam pic in OBS
-            obswebsockets_manager.set_source_visibility(config["SCENE_NAME"], config["SOURCE_NAME"], False)
+        obswebsockets_manager.set_source_visibility(config["SCENE_NAME"], config["SOURCE_NAME"], False)
 
-    print("[green]\n!!!!!!!\nFINISHED PROCESSING DIALOGUE.\nREADY FOR NEXT INPUT\n!!!!!!!\n")
+    print(log_string("dialogue_finished"))
