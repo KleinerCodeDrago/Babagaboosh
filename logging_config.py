@@ -97,9 +97,8 @@ LOG_STRINGS = {
         "ending_azure_speech_recognition": "\nBeende Azure-Spracherkennung\n",
         "continuous_speech_recognition_result": "Hier ist das Ergebnis, das wir erhalten haben!\n\n{}\n\n",
         "final_result": "\n\nHIER IST DAS ERGEBNIS:\n{}",
-        # TODO: Translate
-        "could_not_connect_obs": "\nPANIC!!\nCOULD NOT CONNECT TO OBS!\nDouble check that you have OBS open and that your websockets server is enabled in OBS.",
-        "conected_to_obs": "Connected to OBS Websockets!\n"
+        "could_not_connect_obs": "\nPANIK!!!\nKEINE VERBINDUNG ZU OBS!\nÜberprüfen Sie, ob Sie OBS geöffnet haben und ob Ihr Websockets-Server in OBS aktiviert ist.",
+        "conected_to_obs": "Verbunden mit OBS Websockets!\n"
 
     },
     "de_simple": {
@@ -148,10 +147,8 @@ LOG_STRINGS = {
         "ending_azure_speech_recognition": "\nBeende Azure Spracherkennung\n",
         "continuous_speech_recognition_result": "Das ist das Ergebnis!\n\n{}\n\n",
         "final_result": "\n\nHIER IST DAS ERGEBNIS:\n{}",
-        # TODO: Translate
-        "could_not_connect_obs": "\nPANIC!!\nCOULD NOT CONNECT TO OBS!\nDouble check that you have OBS open and that your websockets server is enabled in OBS.",
-        "conected_to_obs": "Connected to OBS Websockets!\n"
-
+        "could_not_connect_obs": "\nPANIK!!!\nKEINE VERBINDUNG ZU OBS!\nÜberprüfen Sie, ob Sie OBS geöffnet haben und ob Ihr Websockets-Server in OBS aktiviert ist.",
+        "conected_to_obs": "Keine Verbindung zu OBS!\n"
     }
 }
 
