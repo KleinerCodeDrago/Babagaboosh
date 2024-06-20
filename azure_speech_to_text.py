@@ -13,6 +13,7 @@ class SpeechToTextManager:
     azure_speechconfig = None
     azure_audioconfig = None
     azure_speechrecognizer = None
+    is_speaking = False
 
     def __init__(self):
         # Creates an instance of a speech config with specified subscription key and service region.
@@ -106,7 +107,7 @@ class SpeechToTextManager:
 
         def recognized_cb(evt: speechsdk.SpeechRecognitionEventArgs):
             print(log_string("recognized_event", evt))
-            if evt.result.text.strip() == "":
+            if evt.result.text.strip() == "" and not self.is_speaking:
                 nonlocal done
                 done = True
 

@@ -42,9 +42,11 @@ while True:
 
     # Get question from mic
     mic_result = speechtotext_manager.speechtotext_from_mic_continuous(stop_on_silence=CONTINUOUS_LISTENING)
-    
+        
     if not mic_result:
         continue
+    
+    speechtotext_manager.is_speaking = True
     
     # Send question to OpenAi
     openai_result = openai_manager.chat_with_history(mic_result)
@@ -61,9 +63,11 @@ while True:
 
     # Play the mp3 file
     audio_manager.play_audio(elevenlabs_output, True, True, True)
-
+    
     if config["WEBSOCKET_ENABLED"]:
         # Disable Pajama Sam pic in OBS
         obswebsockets_manager.set_source_visibility(config["SCENE_NAME"], config["SOURCE_NAME"], False)
 
     print(log_string("dialogue_finished"))
+    speechtotext_manager.is_speaking = False
+
